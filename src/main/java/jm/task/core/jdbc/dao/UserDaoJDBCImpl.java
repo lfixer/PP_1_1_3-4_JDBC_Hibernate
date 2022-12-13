@@ -46,26 +46,26 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Не удалось сохранить пользователя");
+            System.out.println("Не удалось удалить пользователя");
         }
     }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users")) {
-        {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                byte age = resultSet.getByte("age");
+            {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    long id = resultSet.getLong("id");
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    byte age = resultSet.getByte("age");
 
-                User user = new User(firstName, lastName, age);
-                user.setId(id);
-                users.add(user);
+                    User user = new User(firstName, lastName, age);
+                    user.setId(id);
+                    users.add(user);
+                }
             }
-        }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
